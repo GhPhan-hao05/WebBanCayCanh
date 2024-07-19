@@ -1,0 +1,73 @@
+﻿ @model IEnumerable<DoanMonhoc_WebCayCanh.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<p>
+    <a href="@Url.Action("AddProduct", "Product")" class="btn btn-secondary">Thêm mới</a>
+</p>
+<p>
+    <a href="@Url.Action("Index", "TypeProduct")" class="btn btn-secondary">Danh sách loại</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Id Cây
+        </th>
+        <th>
+            Id Loại
+        </th>
+        <th>
+            Tên Cây
+        </th>
+
+        <th>
+            Trạng Thái
+        </th>
+        <th>
+            Giá bán
+        </th>
+        <th>
+            Nguồn gốc
+        </th>
+        <th>
+            Hình ảnh
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameProduct)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Source)
+        </td>
+        <td>
+            <img src="~/Content/Images/@item.Image" height="100px" width="100px" />
+        </td>
+
+        <td>
+            @Html.ActionLink("Chỉnh Sửa", "EditProduct", new { id = item.Id }, new { @class = "btn btn-outline-primary" })
+            @Html.ActionLink("Xóa sản phẩm", "DeleteProduct", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+        </td>
+    </tr>
+}
+
+</table>

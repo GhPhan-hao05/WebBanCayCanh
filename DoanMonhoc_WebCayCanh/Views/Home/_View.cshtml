@@ -1,0 +1,38 @@
+﻿@using DoanMonhoc_WebCayCanh.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ShopDBContext db = new ShopDBContext();
+    var alltype = from all in db.TypeProducts select all;
+
+
+}
+    <div class="row pt-3">
+        <div class="col-3 ">
+            <div class="navbar navbar-expand-lg  ">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navhoanhua" aria-controls="navhoanhua" aria-expanded="false" aria-label="Toggle navigation">
+                    v
+                </button>
+                <div class="collapse navbar-collapse" id="navhoanhua">
+                    <div class="list-group list-group-flush d-fixed">
+                        @Html.ActionLink("All Product", "Index", null, new { @class = "btn btn-secondary" })
+                        @foreach (var type in alltype.ToList())
+                        {
+
+                            @Html.ActionLink(type.TenLoai, "Detailsx", new { id = type.IdType }, new { @class = "btn btn-secondary" })
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+    @RenderBody()
+</div>
+    </div>
+   

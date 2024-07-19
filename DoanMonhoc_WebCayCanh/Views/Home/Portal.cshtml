@@ -1,0 +1,114 @@
+﻿@using DoanMonhoc_WebCayCanh.Models
+
+@{
+    ViewBag.Title = "Portal";
+}
+@{
+    ShopDBContext db = new ShopDBContext();
+    var alltype = from all in db.TypeProducts select all;
+}
+<div class="image-container">
+
+        <img src="~/Content/Images/portalfinal.png" width="100%" height="500px" />
+    
+    <div class="overlay">
+        <nav class="navbar navbar-expand-md navbar-toggleable-sm  ">
+            <button class="navbar-toggler text-light" data-bs-toggle="collapse" data-bs-target="#navhoanhua" aria-controls="navhoanhua" aria-expanded="true"><i class="fas fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navhoanhua">
+                <div class="list-group list-group-flush d-fixed">
+                    <a href="/Home/Index" class="link-nostyle">
+                        All Product</a>
+                        @foreach (var type in alltype.ToList())
+                        {
+
+                            <a href="/Home/Detailsx/@type.IdType" class="link-nostyle" > @type.TenLoai</a>
+
+                        }
+
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="textinimg">
+        <p class="text-big">CHUYÊN GIA KIẾN TẠO KHÔNG GIAN XANH</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12 text-center mb-5">
+            <h4>Chúng tôi cam kết đem lại cho bạn trải nghiệm mua hàng tốt nhất</h4>
+        </div>
+        <div class="d-grid">
+            <a href="/Home/Index" class="link-nostyle btn btn-success"> CHỌN MUA NGAY <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="col-12 col-md-6 mt-3">
+            <h5 style="color:forestgreen;">
+                TẦM NHÌN TOÀN CHÂU Á
+            </h5>
+            <h3>
+                CHUYÊN GIA KIẾN TẠO KHÔNG GIAN XANH
+            </h3><hr />
+            <h3>
+                PHONG CÁCH BÀI TRÍ CÂY XANH SÁNG TẠO
+            </h3><hr />
+            <h3>
+                CUNG CẤP ĐA DẠNG CÁC LOẠI SẢN PHẨM
+            </h3><hr />
+            <div>
+                Bên cạnh dịch vụ cung cấp cây cảnh và chăm sóc cây, chúng tôi là
+                chuyên gia đưa giải pháp cây xanh vào trang trí nội thất tại văn phòng,
+                tòa nhà, công trình cảnh quan. Đối với chúng tôi, được làm công việc mang
+                cái đẹp đến cho cuộc sống là niềm hạnh phúc lớn. Chúng tôi coi sứ mệnh của mình không chỉ là
+                cung cấp dịch vụ thật tốt mà còn lan tỏa được tình yêu thiên nhiên, yêu cây xanh đến mọi người.
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mt-3">
+            <img src="~/Content/Images/portal5.png" alt="trangchu1" />
+        </div>
+    </div>
+    <div class="mt-5">
+        <h3>CHÚNG TÔI CUNG CẤP DỊCH VỤ</h3>
+    </div>
+    <div class="row mt-5">
+        <div class="card border-light col-12 col-md-6 mt-3">
+            <img class="card-img-top" src="~/Content/Images/portal3.png" alt="Card image cap" width="330px" height="440px">
+            <div class="card-body">
+                <h5 class="card-title">Thiết kế không gian xanh</h5>
+                <p class="card-text">Thiết kế giải pháp tạo nên không gian xanh cho các văn phòng, tòa nhà; thanh lọc không khí trong môi trường làm việc.</p>
+            </div>
+        </div>
+
+        <div class="card border-light col-12 col-md-6 mt-3">
+            <img class="card-img-top" src="~/Content/Images/portal6.png" alt="Card image cap" width="330px" height="440px">
+            <div class="card-body">
+                <h5 class="card-title">Cung cấp cây cảnh văn phòng</h5>
+                <p class="card-text">Cho thuê cây xanh trang trí văn phòng, tòa nhà, với hơn 1000 sản phẩm cây cảnh, bài trí theo phong cách tự nhiên và hiện đại</p>
+            </div>
+        </div>
+
+        <div class="card border-light col-12 col-md-6 mt-3">
+            <img class="card-img-top" src="~/Content/Images/portal7.png" alt="Card image cap" width="330px" height="440px">
+            <div class="card-body">
+                <h5 class="card-title">Cung cấp cây trang trí nội thất</h5>
+                <p class="card-text">Đi đầu trong sáng tạo, ứng dụng các loại vật liệu có giá trị thẩm mỹ cao trong trang trí cây xanh, có nhiều sản phẩm thiết kế độc đáo, phù hợp với từng khách hàng.</p>
+            </div>
+        </div>
+
+        <div class="card border-light col-12 col-md-6 mt-3">
+            <img class="card-img-top" src="~/Content/Images/portal8.png" alt="Card image cap" width="330px" height="440px">
+            <div class="card-body">
+                <h5 class="card-title">Chăm sóc cây xanh ngoài trời</h5>
+                <p class="card-text">Quy trình dịch vụ chuyên nghiệp, cam kết tiêu chuẩn chất lượng rõ ràng, giám sát chặt chẽ, báo cáo đầy đủ.</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <img src="~/Content/Images/portal1.png" alt="Your Image" width="240">
+        
+       <button class="button buttonfit">Click me</button>
+
+    </div>
+</div>
+
+

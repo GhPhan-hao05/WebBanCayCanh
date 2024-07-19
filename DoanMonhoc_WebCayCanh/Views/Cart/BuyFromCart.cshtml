@@ -1,0 +1,112 @@
+﻿@model DoanMonhoc_WebCayCanh.Models.ViewModel.ShoppingCartVM
+
+@{
+    ViewBag.Title = "BuyFromCart";
+}
+<div class="container">
+    <h2 class="mb-4">Các sản phẩm của bạn</h2>
+
+    @using (Html.BeginForm("BuyFromCart", "Cart", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal" >
+
+            @foreach (var cartitem in Model.ListCart)
+            {
+                <div class="row">
+                    <div class="col-12 col-md-3 text-center py-2">
+                        <img src="~/Content/Images/@cartitem.Product.Image" class="rounded text-center" width="80" />
+                    </div>
+                    <div class="col-12 col-md-3 text-lg-left">
+                        <h5><strong>@cartitem.Product.NameProduct</strong></h5>
+                        <p><small>@Html.Raw(cartitem.Product.ShortDescribe)</small></p>
+                    </div>
+                    <div class="col-12 col-md-3 text-lg-right row">
+                        <div class="col-4 text-md-right" style="padding-top:5px;">
+                            <h6><strong>@cartitem.Product.Price<span class="text-muted">x</span> @cartitem.Count </strong></h6>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+            }
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.HiddenFor(model => Model.OrderHeader.Id)
+            </div>
+            <div class="form-group px-2 py-2 shadow" style="background-color:whitesmoke">
+
+                <div class="col-md-10">
+                    Ngày đặt hàng: @Html.DisplayFor(model => Model.OrderHeader.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.OrderHeader.OrderDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    Trạng thái đơn hàng: @Html.DisplayFor(model => Model.OrderHeader.OrderStatus, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.OrderHeader.OrderStatus, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    Tổng đơn hàng: @Html.DisplayFor(model => Model.OrderHeader.OrderTotal, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.OrderHeader.OrderTotal, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    ID người dùng: @Html.DisplayFor(model => Model.OrderHeader.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.OrderHeader.UserId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="form-group row mt-5 shadow px-2 " style="background-color:whitesmoke">
+
+                <div class="col-12 col-md-6 pt-2">
+                    Nhập họ tên người nhận:
+                    @Html.EditorFor(model => Model.OrderHeader.TenNguoiNhan, new { htmlAttributes = new { @class = "form-control", Value = "Tên" } })
+                    @Html.ValidationMessageFor(model => Model.OrderHeader.TenNguoiNhan, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-12 col-md-6 pt-2">
+                    Nhập số điện thoại người nhận:
+                    @Html.EditorFor(model => Model.OrderHeader.SoDTNguoiNhan, new { htmlAttributes = new { @class = "form-control", Value = "SDT" } })
+                    @Html.ValidationMessageFor(model => Model.OrderHeader.SoDTNguoiNhan, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-12 col-md-6 pt-2 pb-2">
+                    Nhập địa chỉ cụ thể (số nhà, Thôn/Ấp, Phường/Xã, Quận/Huyện, Tỉnh/Thành phố):
+                    @Html.EditorFor(model => Model.OrderHeader.DiaChiNhan, new { htmlAttributes = new { @class = "form-control", Value = "ĐC" } })
+                    @Html.ValidationMessageFor(model => Model.OrderHeader.DiaChiNhan, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-12 col-md-6 pt-4">
+                    PHƯƠNG THỨC THANH TOÁN:
+                    <select name="paymentMethod">
+                        <option value="By Cash">By Cash</option>
+                        <option value="By Card">By Card</option>
+                    </select>
+                </div>
+            </div>
+
+           
+            <div class="form-group mt-3">
+                <div class="col-12 col-md-6 d-grid">
+                    <input type="submit" value="Đặt hàng" class="btn btn-outline-dark" />
+                </div>
+            </div>
+            <div class="form-group">
+                NẾU KHÔNG CLICK THANH TOÁN ĐƠN HÀNG SẼ BỊ HỦY SAU 3 NGÀY
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 pr-4">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <span class="text-info"> Total </span>
+                    <strong class="text-info"> <span id="txtOrderTotal">@Model.OrderHeader.OrderTotal</span></strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+</div>
+
+

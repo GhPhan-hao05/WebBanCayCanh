@@ -1,0 +1,45 @@
+﻿@model DoanMonhoc_WebCayCanh.Models.TypeProduct
+
+@{
+    ViewBag.Title = "DeleteType";
+}
+
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên Loại:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenLoai)
+        </dd>
+
+    </dl>
+    @if (ViewBag.Exist != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Exist</div>
+        <a href="@Url.Action("index", "TypeProduct")" class="btn btn-secondary">Về danh sách loại</a>
+    }
+    else
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IdType)
+                @Html.HiddenFor(model => model.TenLoai)
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Xóa" class="btn btn-dark" /> |
+                </div>
+            </div>
+           
+        }
+    }
+
+</div>

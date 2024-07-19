@@ -1,0 +1,135 @@
+﻿@model DoanMonhoc_WebCayCanh.Models.ViewModel.ShoppingCartVM
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<a href="@Url.Action("Portal", "Home")" class="btn btn-secondary ms-3 mt-2 mb-2">Về trang chủ</a>
+<div class="container" style="background-color:whitesmoke">
+    
+    <div class="row" >
+        <div class="col-md-8 col-12 pt-3">
+            <h2>Giỏ hàng của bạn (@ViewBag.count)</h2>
+
+            @foreach (var cartitem in Model.ListCart)
+            {
+                <div class="row border-bottom mb-3 mt-3 ms-3 pe-3" style="background-color:white">
+                    <div class="col-6 mt-3 mb-3 border-end text-center">
+                        <img src="~/Content/Images/@cartitem.Product.Image" width="100%" height="100%" class="shadow" />
+                    </div>
+
+                    <div class="col-6 mt-3 mb-3">
+                        <div class=" row text-right border-bottom mt-3">
+                            <h5><strong>@cartitem.Product.NameProduct</strong></h5>
+                            <p><small>@Html.Raw(cartitem.Product.ShortDescribe)</small></p>
+                        </div>
+                        <div class="row">
+                            <div class="text-start col-6 border-end" style="padding-top:5px;">
+                                <h6>Giá:</h6>
+                            </div>
+                            <div class="text-end col-6" style="padding-top:5px;">
+                                @cartitem.Product.Price
+                            </div>
+                            <div class="text-start col-6 border-end" style="padding-top:5px;">
+                                <h6>Số lượng:</h6>
+                            </div>
+                            <div class="text-end col-6" style="padding-top:5px;">
+                                @cartitem.Count
+                                <div class="row mt-2">
+                                    <div class="col-6 d-grid">
+                                        @Html.ActionLink("+", "Plus", new { cartId = @cartitem.Id }, new { @class = "btn btn-secondary" })
+                                    </div>
+                                    <div class="col-6 d-grid">
+                                        @Html.ActionLink("-", "Minus", new { cartId = @cartitem.Id }, new { @class = "btn btn-secondary" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row border-top text-center d-flex align-items-end mt-5 pt-3">
+                            <div class="col border-end d-grid">
+                                @Html.ActionLink("Remove", "Remove", new { cartId = @cartitem.Id }, new { @class = "btn btn-dark" })
+                            </div>
+                            <div class="col d-grid">
+                                @Html.ActionLink("Details", "Details", "Home", new { id = @cartitem.Product.Id }, new { @class = "btn btn-dark" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="col-12 col-md-4 ps-4 pt-5 border-start " style="background-color:white">
+            <div class="row">
+                <div class="text-start col-6 border-end" style="padding-top:5px;">
+                    <h6>Tổng cộng:</h6>
+                </div>
+                <div class="text-end col-6" style="padding-top:5px;">
+                    @Model.OrderHeader.OrderTotal
+                </div>
+                <div class="text-start col-6 border-end" style="padding-top:5px;">
+                    <h6>Phí ship:</h6>
+                </div>
+                <div class="text-end col-6" style="padding-top:5px;">
+                    0.00
+                </div>
+                <div class="text-start col-6 border-end" style="padding-top:5px;">
+                    <h6>Thuế VAT:</h6>
+                </div>
+                <div class="text-end col-6" style="padding-top:5px;">
+                    0.00
+                </div>
+                <div class="mt-2">
+                    Thuế và phí vận chuyển sẽ phụ thuộc vào vị trí của bạn, phí này sẽ không vượt quá 30.000Đ
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 d-grid">
+                    @Html.ActionLink("Mua ngay", "BuyFromCart", null, new { @class = "btn btn-dark" })
+                </div>
+
+            </div>
+            <div class="row mt-3 mb-3 border-bottom">
+                <div class="col-3 text-center ">
+                    <i class="fa-regular fa-credit-card"></i>
+                </div>
+                <div class="col-9 ">
+                    Thanh toán qua thẻ hoặc tiền mặt
+                </div>
+
+            </div>
+            <div class="row mt-3 mb-3 border-bottom">
+                <div class="col-3 text-center">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div class="col-9 ">
+                    Giao hàng toàn quốc và quốc tế
+                </div>
+
+            </div>
+            <div class="row mt-3 mb-3 border-bottom">
+                <div class="col-3 text-center">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                </div>
+                <div class="col-9 ">
+                    Chinhs sách đổi trả nhanh chóng.
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+

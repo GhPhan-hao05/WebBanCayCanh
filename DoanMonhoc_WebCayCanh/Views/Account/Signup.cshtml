@@ -1,0 +1,122 @@
+﻿@model DoanMonhoc_WebCayCanh.Models.User
+
+@{
+    ViewBag.Title = "Signup";
+}
+
+@{
+    Layout = "~/Views/Account/_Account.cshtml";
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<div class="contain mt-5">
+    <div class="row contain">
+        <div class=" col-12 col-md-6 offset-3 item1 px-5 pt-5">
+            <h3 class="mb-3">Sign Up!!</h3>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <h5 style="text-shadow: 1px 1px white;"> Nhập UserName</h5>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 style="text-shadow: 1px 1px white;"> Nhập UserPassword</h5>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.UserPassword, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 style="text-shadow: 1px 1px white;"> Nhập họ tên</h5>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 style="text-shadow: 1px 1px white;"> Nhập địa chỉ</h5>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 style="text-shadow: 1px 1px white;"> Nhập số điện thoại:</h5>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 style="text-shadow: 1px 1px white;"> Chọn Role (ở đây phần đăng nhập sẽ do admin quản lý để chọn role)</h5>
+
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Role,
+                                 Model.RoleList,
+                                "Select role",
+                                    new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @if (ViewBag.dup != null)
+                    {
+                        <div class="col-12 text-danger">@ViewBag.dup </div>
+                    }
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 mt-3">
+                        <input type="submit" value="Đăng Ký" class="btn btn-light" />
+                    </div>
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-light mt-3">Về trang đăng nhập</a>
+                    <a href="@Url.Action("Portal", "Home")" class="btn btn-outline-light mt-3"><i class="fa-solid fa-house"></i></a>
+                </div>
+                </div>
+            }
+
+        </div>
+        <div class="item2 col-12 col-md-6 offset-3">
+            <img src="~/Content/Images/bg2.png" class="blur-image" width="590px" height="720px" />
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<style>
+    .contain {
+        position: relative;
+    }
+
+    .item1 {
+        position: absolute;
+        z-index: 2;
+    }
+
+    .item2 {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .blur-image {
+        filter: blur(5px); /* Adjust the blur radius as needed */
+    }
+</style>

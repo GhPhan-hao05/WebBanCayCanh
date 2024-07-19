@@ -1,0 +1,102 @@
+﻿@model DoanMonhoc_WebCayCanh.Models.OrderDetails
+
+@{
+    ViewBag.Title = "BuyNow";
+}
+
+
+
+
+
+@using (Html.BeginForm("BuyNow", "Cart", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        
+            <div class="row">
+                <div class="col-12 col-md-3 text-center py-2">
+                    <img src="~/Content/Images/@Model.Product.Image" class="rounded text-center" width="80" />
+                </div>
+                <div class="col-12 col-md-3 text-lg-left">
+                    <h5><strong>@Model.Product.NameProduct</strong></h5>
+                    <p><small>@Html.Raw(Model.Product.ShortDescribe)</small></p>
+                </div>
+                <div class="col-12 col-md-3 text-lg-right row">
+                    <div class="col-4 text-md-right" style="padding-top:5px;">
+                        <h6><strong>@Model.Product.Price<span class="text-muted">x</span> @Model.Count </strong></h6>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+        
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="form-group">
+            @Html.HiddenFor(model => Model.Id)
+        </div>
+        <div class="form-group">
+            @Html.HiddenFor(model => Model.OrderId)
+        </div>
+        <div class="form-group">
+            @Html.HiddenFor(model => Model.ProductId)
+        </div>
+    </div>
+     
+
+        <div class="form-group row mt-5 shadow px-2 " style="background-color:whitesmoke">
+
+            <div class="col-12 col-md-6 pt-2">
+                Tên Người Nhận
+                <div class="col-md-10">
+                    <input type="text" name="tenNguoiNhan" class="form-control"  value="Tên"/>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 pt-2">
+                Số điện thoại người nhận
+                <div class="col-md-10">
+                    <input type="text" name="soDTNguoiNhan" class="form-control"  value="SDT"/>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 pt-2 pb-2">
+                Nhập địa chỉ cụ thể (số nhà, Thôn/Ấp, Phường/Xã, Quận/Huyện, Tỉnh/Thành phố):
+                <div class="col-md-10">
+                    <input type="text" name="diaChiNhan" class="form-control"  value="ĐC"/>
+                </div>
+            </div>
+            <div class="form-group pb-3">
+                PHƯƠNG THỨC THANH TOÁN
+                <div class="col-md-10">
+                    <select name="paymentMethod">
+                        <option value="By Cash">By Cash</option>
+                        <option value="By Card">By Card</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group mt-3">
+            <div class="col-12 col-md-6 d-grid">
+                <input type="submit" value="Đặt hàng" class="btn btn-outline-dark" />
+            </div>
+        </div>
+        <div class="form-group">
+            NẾU KHÔNG CLICK THANH TOÁN ĐƠN HÀNG SẼ BỊ HỦY SAU 3 NGÀY
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 pr-4">
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between bg-light">
+                <span class="text-info"> Total </span>
+                <strong class="text-info"> <span id="txtOrderTotal">@Model.OrderHeader.OrderTotal</span></strong>
+            </li>
+        </ul>
+    </div>
+</div>

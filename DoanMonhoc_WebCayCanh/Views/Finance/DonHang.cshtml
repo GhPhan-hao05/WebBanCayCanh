@@ -1,0 +1,116 @@
+﻿@model IEnumerable<DoanMonhoc_WebCayCanh.Models.OrderHeader>
+@using DoanMonhoc_WebCayCanh.Models
+
+@{
+    ViewBag.Title = "DonHang";
+}
+
+<div class="container">
+<h2>Quản lý đơn hàng</h2>
+
+
+<table class="table" id="accordion">
+    <tr>
+        <th>
+            Id người dùng
+        </th>
+        <th>
+            Ngày đặt hàng
+        </th>
+
+        <th>
+            Tên người nhận
+        </th>
+        <th>
+           Địa chỉ
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+            Trạng thái đơn hàng
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th></th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNguoiNhan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChiNhan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoDTNguoiNhan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderTotal)
+            </td>
+            <td>
+                @{ShopDBContext db = new ShopDBContext();
+                    var allprdu = from all in db.OrderDetailss where all.OrderId == item.Id select all;
+                    
+                    string l = "a";
+                    string z = l + item.Id.ToString();
+
+
+                }
+                <p class="d-inline-flex gap-1">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#@z" aria-expanded="true" aria-controls="@z">
+                        Details
+                    </button>
+                </p>
+                @if (item.OrderStatus == SD.ChuaThanhToan)
+                {
+                    <a href="@Url.Action("Delete", "Finance",new { id = item.Id })" class="btn btn-secondary d-grid">Delete</a>
+                }
+            </td>
+        </tr>
+       
+            foreach (var prd in allprdu)
+            {
+            <tr class="collapse" aria-labelledby="@z" id="@z" data-parent="#accordion">
+                <td></td>
+                <td>
+                   Id sản phẩm: @Html.DisplayFor(modelItem => prd.ProductId)
+                </td>
+                @{var x = db.Products.FirstOrDefault(t => t.Id == prd.ProductId);}
+
+                <td>
+                   Tên sản phẩm: @Html.DisplayFor(modelItem => x.NameProduct)
+                </td>
+
+                <td>
+                   Giá: @Html.DisplayFor(modelItem => x.Price)
+                </td>
+                <td>
+                   Số lượng: @Html.DisplayFor(modelItem => prd.Count)
+                </td>
+            </tr>
+             }
+       
+}
+  </table>
+</div>
+
+
+
+
+

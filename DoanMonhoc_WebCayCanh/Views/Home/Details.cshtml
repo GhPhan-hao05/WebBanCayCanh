@@ -1,0 +1,97 @@
+﻿@model DoanMonhoc_WebCayCanh.Models.Product
+@using DoanMonhoc_WebCayCanh.Models
+@{
+    ViewBag.Title = "Details";
+}
+@{
+    ShopDBContext db = new ShopDBContext();
+    var feedback = from fb in db.Feedbacks where fb.IdSanPham == Model.Id select fb;
+
+
+}
+
+<div class="container">
+    <h2>CHI TIẾT SẢN PHẨM</h2>
+
+    <div class="row border-bottom mb-3 mt-3 ms-3 pe-3" style="background-color:white">
+        <div class="col-6 mt-3 mb-3 border-end text-center">
+            <img src="~/Content/Images/@Model.Image" width="100%" height="100%" class="shadow" />
+        </div>
+
+        <div class="col-6 mt-3 mb-3">
+            <div class=" row text-right border-bottom mt-3">
+                <h5><strong>@Model.NameProduct</strong></h5>
+                <p><small>@Html.Raw(Model.ShortDescribe)</small></p>
+            </div>
+            <div class="row">
+                <div class="text-start col-6 border-end" style="padding-top:5px;">
+                    <h6>Giá:</h6>
+                </div>
+                <div class="text-end col-6" style="padding-top:5px;">
+                    @Model.Price
+                </div>
+                <div class="text-start col-6 border-end" style="padding-top:5px;">
+                    <h6>TÌnh trạng:</h6>
+                </div>
+                <div class="text-end col-6" style="padding-top:5px;">
+                    @Model.Status
+                </div>
+                <div class="text-start col-6 border-end" style="padding-top:5px;">
+                    <h6>Nguồn gốc:</h6>
+                </div>
+                <div class="text-end col-6" style="padding-top:5px;">
+                    @Model.Source
+                </div>
+
+            </div>
+            <div class="row border-top text-center d-flex align-items-end mt-5 pt-3">
+                <div class="col border-end d-grid">
+                    <a href="@Url.Action("AddToCart", "Cart",new { id = @Model.Id })" class="btn btn-dark">Add To Cart</a>
+                </div>
+                <div class="col d-grid">
+                    <a href="@Url.Action("BuyNow", "Cart",new { id = @Model.Id })" class="btn btn-outline-dark">Buy Now</a>
+                </div>
+                <div class="col d-grid">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Nhận xét từ người mua:</h3>
+<div class="row">
+    @foreach (var thit in feedback)
+    {
+        var us = db.Users.FirstOrDefault(t => t.ID == thit.IdUser);
+        <div class="row">
+            <div class="col-2">@us.Name</div>
+            <div class="col-8">Nội dung: @thit.NoiDung</div>
+        </div><hr />
+    }
+
+</div>
+<div>
+
+    <form action="@Url.Action("FeedBack", "Home")" method="post">
+        <div>
+            <label for="myString">Nhập nội dung::</label>
+            <input type="text" name="noidung" class="form-control" />
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            int user = Convert.ToInt32(Request.Cookies["UserId"].Value);
+            <div>
+                <input type="hidden" name="nguoidung" value="@user" readonly class="form-control" />
+            </div>
+        }
+
+        <div>
+            <input type="hidden" name="idsanpham" value="@Model.Id" readonly class="form-control" />
+        </div>
+        <button type="submit">Đăng </button>
+    </form>
+</div>
+
+
+

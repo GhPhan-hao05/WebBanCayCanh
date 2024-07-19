@@ -1,0 +1,100 @@
+﻿@model DoanMonhoc_WebCayCanh.Models.Product
+@{
+    ViewBag.Title = "AddProduct";
+}
+@using DoanMonhoc_WebCayCanh.Models
+<h2>THÊM MỚI SẢN PHẨM</h2>
+
+
+@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post, new
+{ enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        Nhập tên sản phẩm
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NameProduct, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NameProduct, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Nhập mô tả ngắn:
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ShortDescribe, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ShortDescribe, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Trạng thái:
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        Nhập giá bán:
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div>
+        Chọn File Hình:
+        @Html.TextBoxFor(model => model.FileImage, new { type = "file" })
+    </div>
+
+    <div class="form-group">
+        Nguồn gốc:
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Source, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Source, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @Html.HiddenFor(model => model.IdType, new { @Value = -1 })
+    @{ShopDBContext db = new ShopDBContext();
+        var RoleList = db.TypeProducts.ToList().Select(
+        i => new SelectListItem
+        {
+            Text = i.TenLoai,
+            Value = i.IdType.ToString(),
+        });
+     }
+    <div class="form-group">
+        Chọn loại cây
+        <div class="col-md-10">
+            @Html.DropDownList("Type",
+                RoleList,
+                "Select type",
+                    new { @class = "form-control" })
+        </div>
+    </div>
+    @if (ViewBag.error != null)
+                {
+                    <div class="col-12 text-danger">@ViewBag.error</div>
+                }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 mt-2">
+            <input type="submit" value="Thêm mới" class="btn btn-dark" />
+        </div>
+    </div>
+</div>
+}
+
+<div class="mt-2">
+    <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Về danh sách</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

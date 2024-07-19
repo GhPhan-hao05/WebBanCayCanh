@@ -1,0 +1,62 @@
+﻿@using DoanMonhoc_WebCayCanh.Models
+@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "DoanhThu";
+}
+@{
+    ShopDBContext db = new ShopDBContext();
+    var top5Product = db.OrderDetailss.Where(pr => pr.OrderHeader.OrderStatus == SD.ChoVanChuyen || pr.OrderHeader.OrderStatus == SD.ChoVanChuyen).GroupBy(pr => pr.ProductId)
+        .Select(group => new
+        {
+            ProductId = group.Key,
+            CountTotal = group.Sum(pr => pr.Count)
+        }).OrderByDescending(result => result.CountTotal * db.Products.FirstOrDefault(t => t.Id == result.ProductId).Price).Take(5);
+    string[] namesArray = new string[] { };
+    double[] totalsArray = new double[] { };
+}
+<div class="container">
+     <h2>DoanhThu: @ViewBag.TotalDoanhThu</h2>
+@foreach (var item in top5Product)
+{
+    var name = db.Products.FirstOrDefault(t => t.Id == item.ProductId).NameProduct;
+    var priceTotal = db.Products.FirstOrDefault(t => t.Id == item.ProductId).Price * item.CountTotal;
+    namesArray = namesArray.Append(name).ToArray();
+    totalsArray = totalsArray.Append(priceTotal).ToArray();
+}
+@{
+    string jvnamesArray = JsonConvert.SerializeObject(namesArray);
+    string jvtotalsArray = JsonConvert.SerializeObject(totalsArray);
+}
+<div>
+    <h3>Top 5 sản phẩm bán chạy nhất</h3>
+</div>
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var arrname = @Html.Raw(jvnamesArray);
+    var arrdata = @Html.Raw(jvtotalsArray);
+    var ctx = document.getElementById("myChart");
+    var barColors = ["red", "green"]
+    var options = {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: arrname,
+            datasets: [{
+                backgroundColor: barColors,
+                data: arrdata
+            }]
+        },
+        options: options
+    });
+
+</script>
